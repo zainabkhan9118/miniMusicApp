@@ -14,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   final _auth = FirebaseAuth.instance;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _showPassword = false;
 
   void _login() async {
     try {
@@ -85,18 +86,29 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(height: 20),
-                      TextField(
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          labelStyle: TextStyle(color: Colors.black),
-                          filled: true,
-                          fillColor: Colors.white.withOpacity(0.8),
-                          border: OutlineInputBorder(),
+                          TextField(
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            labelStyle: TextStyle(color: Colors.black),
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.8),
+                            border: OutlineInputBorder(),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _showPassword ? Icons.visibility : Icons.visibility_off,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _showPassword = !_showPassword;
+                                });
+                              },
+                            ),
+                          ),
+                          obscureText: !_showPassword,
+                          style: TextStyle(color: Colors.black),
                         ),
-                        obscureText: true,
-                        style: TextStyle(color: Colors.black),
-                      ),
                       SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: _login,
